@@ -10,6 +10,10 @@ A chat room using Node.js and Socket.io.  Based on the tutorial from https://www
 
 ##Version History
 
+######Version 1.1.0
+- Changing directory structure.
+-  Removing the nano scroller plugin and just using standard built in scrollbars.
+- Changing some of the CSS.
+
 ######Version 1.0.0
 - Created app and Git repository.
-

@@ -13,6 +13,8 @@ var ContainerView = Backbone.View.extend({
 });
 
 var LoginView = Backbone.View.extend({
+    className: 'app',
+
     template: _.template($('#login-template').html()),
 
 
@@ -46,6 +48,8 @@ var LoginView = Backbone.View.extend({
 
 
 var HomeView = Backbone.View.extend({
+    className: 'chat-room-container',
+
     template: _.template($("#home-template").html()),
 
     events: {
@@ -96,9 +100,6 @@ var HomeView = Backbone.View.extend({
         this.$('#userList').append(template(model.toJSON()));
 
         this.$('#userCount').html(this.model.get("onlineUsers").length);
-
-        
-        this.$('.nano').nanoScroller();
     },
 
     renderChats: function() {
@@ -110,14 +111,26 @@ var HomeView = Backbone.View.extend({
     },
 
     renderChat: function(model) {
-        var template = _.template("<a class='list-group-item'><span class='text-info'><%= sender %></span>:<%= message %></a>");
+        var $chatRoomObj = $('.chat-room-text');
+        var templateHtml = '';
+        var template = {};
+
+        if ( typeof model.attributes.sender === 'string' && model.attributes.sender.length === 0 ) {
+            templateHtml = '<li class="team-member"><%= message %></li>'
+        } else {
+            templateHtml = '<li><div class="team-member"><%= sender %>:</div><%= message %></li>';
+        }
+
+        template = _.template(templateHtml);
 
         var element = $(template(model.toJSON()));
         
-        element.appendTo(this.$('#chatList')).hide().fadeIn().slideDown();
+        element.appendTo(this.$('#chatList'));
 
-        this.$('.nano').nanoScroller();
-        this.$('.nano').nanoScroller({ scroll: 'bottom' });
+        if ( $chatRoomObj.length ) {
+            $chatRoomObj.scrollTop($chatRoomObj[0].scrollHeight);
+        }
+        
     },
 
 

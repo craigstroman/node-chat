@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Node chat room using Socket.io",
   "scripts": {
-    "start": "node ./app/scripts/web",
+    "start": "node ./app",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Craig Stroman",

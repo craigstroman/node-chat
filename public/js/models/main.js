@@ -28,7 +28,7 @@ var HomeModel = Backbone.Model.extend({
 
         //Backbone collection for user chats, initialized with predefined chat model
         userChats: new ChatCollection([
-            new ChatModel({sender: '', message: 'Chat Server v.'})
+            new ChatModel({sender: '', message: '<b>Chat Server v.</b>'})
         ])
     },
 
