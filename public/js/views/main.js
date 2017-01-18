@@ -57,8 +57,6 @@ var HomeView = Backbone.View.extend({
     },
 
     initialize: function(options) {
-
-        console.log(options);
         this.vent = options.vent;
 
         var onlineUsers = this.model.get('onlineUsers');
@@ -116,9 +114,15 @@ var HomeView = Backbone.View.extend({
         var template = {};
 
         if ( typeof model.attributes.sender === 'string' && model.attributes.sender.length === 0 ) {
-            templateHtml = '<li class="team-member"><%= message %></li>'
+            templateHtml = '<li class="room-title"><%= message %></li>';
         } else {
-            templateHtml = '<li><div class="team-member"><%= sender %>:</div><%= message %></li>';
+            templateHtml = '<li class="message-content">' +
+                                            '<div class="message-content-header">' + 
+                                                '<div class="message-content-header-left"><%= sender %></div>' + 
+                                                '<div class="message-content-header-right"><%= messageDateTime %></div>' +
+                                            '</div>' + 
+                                            '<div class="message-body"><%= message %></div>' + 
+                                    '</li>';
         }
 
         template = _.template(templateHtml);

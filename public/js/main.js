@@ -40,8 +40,8 @@ var MainController = function() {
 
     // Socket client event bus message handlers
     self.viewEventBus.on("chat", function(chat) {
-    // socketio chat
-    self.chatClient.chat(chat);
+        // socketio chat
+        self.chatClient.chat(chat);
     });
 
     // Triggered when login success
@@ -75,13 +75,11 @@ var MainController = function() {
     // Triggered when a client joins the server.
     self.appEventBus.on('userJoined', function(username) {
         self.homeModel.addUser(username);
-        self.homeModel.addChat({sender: '', message: username + ' joined the room.'});
     });
 
     // Triggered when a client leaves the server.
     self.appEventBus.on('userLeft', function(username) {
         self.homeModel.removeUser(username);
-        self.homeModel.addChat({sender: '', message: username + ' left the room.'});
     });           
 
     // Triggered when chat receieved

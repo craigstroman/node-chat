@@ -1,6 +1,8 @@
 'use strict';
 
 var _ = require('underscore');
+var moment = require('moment');
+var db = require('./model/chat');
 
 var Server = function(options) {
   var self = this;
@@ -11,7 +13,7 @@ var Server = function(options) {
   self.users = [];
 
   // initialize function
-  self.init = function() {
+  self.init = function(Chat) {
     // Fired upon a connection
     self.io.on('connection', function(socket) {
       self.handleConnection(socket);
@@ -40,6 +42,18 @@ var Server = function(options) {
       } else {
         // create a new user model
         var newUser = new User({ user: username, socket: socket });
+
+        // Show all previous messages to user when connects to chat.
+        db.getPreviousMsgs(50, function(err, docs) {
+          docs.forEach(function(el) {
+            var  messageDate = el.created;
+            
+            messageDate = moment(messageDate).format("MMM D YYYY, h:mm:ss a");
+
+            socket.emit('chat', {sender: el.sender, message: el.msg, messageDateTime: messageDate});
+          });
+        });   
+
         // push to users array
         self.users.push(newUser);
         // set response listeners for the new user
@@ -71,8 +85,15 @@ var Server = function(options) {
 
     // triggered when socket send a chat message
     user.socket.on('chat', function(chat) {
+      var created = Date.now();     
       if (chat) {
-        self.io.sockets.emit('chat', { sender: user.user, message: chat });
+        db.saveMsg({sender: user.user, message: chat, created: created}, function(err) {
+          if (err) {
+            throw err;
+          }
+        });
+        created = moment(created).format("MMM D YYYY, h:mm:ss a");
+        self.io.sockets.emit('chat', { sender: user.user, message: chat, messageDateTime:  created});
       }
     });
   }

@@ -49,7 +49,7 @@ var HomeModel = Backbone.Model.extend({
     },
 
     addChat: function(chat) {
-        this.get('userChats').add(new ChatModel({sender: chat.sender, message: ' ' + chat.message}));
+        this.get('userChats').add(new ChatModel({sender: chat.sender, message: ' ' + chat.message, messageDateTime: chat.messageDateTime}));
     },
 });
 

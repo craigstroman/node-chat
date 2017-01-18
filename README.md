@@ -10,9 +10,15 @@ A chat room using Node.js and Socket.io.  Based on the tutorial from https://www
 
 ##Version History
 
+######Version 1.2.0
+- Added a Mongo DB to save and redisplay conversation threads when new users enter chat.
+- Added MomentJS for formatting dates.
+- Changed CSS for messages displayed in chat.
+- Now showing time stamp for message in chat.
+
 ######Version 1.1.0
 - Changing directory structure.
--  Removing the nano scroller plugin and just using standard built in scrollbars.
+- Removing the nano scroller plugin and just using standard built in scrollbars.
 - Changing some of the CSS.
 
 ######Version 1.0.0

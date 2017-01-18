@@ -11,9 +11,10 @@ var ChatClient = function(options) {
     self.hostname = 'http://' + window.location.host;
 
     self.connect = function() {
+        console.log('Chat loaded.');
+
         // Connect to the host
         self.socket = io.connect(self.hostname);
-
         // Set responseListeners on the socket
         self.setResponseListeners(self.socket);
     }
