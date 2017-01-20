@@ -1,0 +1,28 @@
+.login-box {
+    @extend .row;
+    .login-box-area {
+        @extend .col-md-4;
+        @extend .col-md-offset-4;
+        @extend .text-center;
+        .login-box-well {
+            @extend .well;
+            .login-form {
+                @extend .form-horizontal;
+                .login-form-fields {
+                    @extend .form-group;
+                    .login-form-control {
+                        @extend .form-control;
+                    }
+                    .login-form-error {
+                        @extend .control-label;
+                    }
+                    .login-form-btn {
+                        @extend .btn;
+                        @extend .btn-primary;
+                        @extend .btn-lg;
+                    }
+                }
+            }
+        }
+    }
+}

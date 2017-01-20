@@ -1,0 +1,38 @@
+// Vendor
+@import "vendor/bootstrap/bootstrap";
+
+// Font-Awesome
+@import "vendor/font-awesome/font-awesome";
+
+// Base
+@import "base/variables/index";
+@import "base/mixins/index";
+@import "base/helpers/index";
+@import "base/typography/index";
+
+// Shared
+@import "shared/classes/index";
+@import "shared/elements/index";
+@import "shared/forms/index";
+
+//Figure out why gulp is copying vendor files into public dirctory.
+
+html,
+body {
+    height: 100%;
+} 
+
+.container {
+    margin-top: 10px;
+    height: 100%;
+    
+
+    // Header
+    @import "shared/header/index";
+
+    // Pages
+    @import "application/index";
+
+    // Footer
+    @import "shared/footer/index";    
+}

@@ -9,60 +9,62 @@
         <title></title>
         <meta name="description" content=""/>
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
-        <link href="/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"/>
         <link href="/bower_components/ladda/dist/ladda-themeless.min.css" rel="stylesheet"/>
-        <link href="/css/main.css" rel="stylesheet"/>       
+        <link href="/css/styles.css" rel="stylesheet"/>       
     </head>
     <body>
         <div id="container" class="container"></div>
 
         <script type="text/template" id="login-template">
-            <div class="row">
-                <div class="col-md-4 col-md-offset-4 text-center">
-                    <div class="well">
-                        <div class="form-group <% if (error)  {%>has-error<% } %>">
-                            <label> Name </label>
-                            <input type="text" class="form-control" id="nameText" placeholder="Enter your name">
+            <div class="login-box">
+                <div class="login-box-area">
+                    <div class="login-box-well">
+                        <form class="login-form">
+                            <div class="login-form-fields <% if (error)  {%>has-error<% } %>">
+                                    <label> Name </label>
+                                    <input type="text" class="login-form-control" id="nameText" placeholder="Enter your name">
 
-                            <label class="control-label"> <%= error %> </label>
+                                    <label class="login-form-error"> <%= error %> </label>
 
-                            <br/>
-                            <button type="button" id="nameBtn" class="btn btn-primary btn-lg ladda-button" data-size="l" data-style="zoom-out">
-                                <span class="ladda-label">Login</span>
-                            </button>
-                        </div>
+                                    <br/>
+                                    <button type="button" id="nameBtn" class="login-form-btn ladda-button" data-size="l" data-style="zoom-out">
+                                        <span class="ladda-label">Login</span>
+                                    </button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </script>        
 
         <script type="text/template" id="home-template">
-            <div class="row chat-room-loby">
-                <div class="col-md-10 chat-room-area">
-                    <div class="panel panel-default chat-room-panel">
-                        <div class="panel-heading">Loby</div>
-                        <div class="panel-body chat-room-text">
+            <div class="chat-room-loby">
+                <div class="chat-room-area">
+                    <div class="chat-room-panel">
+                        <div class="chat-room-heading">Loby</div>
+                        <div class="chat-room-text">
                                 <ul id="chatList"></ul>
                         </div>
-                        <div class="panel-footer">
+                        <div class="chat-room-footer">
                             <form>
                                 <input type="text" name="chatInput" id="chatInput" class="form-control" placeholder="Enter chat message here." autofocus="true"  aria-labelby="Enter chat message here." tabindex="0" />
                             </form>                            
                         </div>
                     </div>
                 </div>
-                <div class="col-md-2 users-area">
-                    <div class="panel panel-default online-users">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Online Users <span class="badge pull-right" id="userCount"></span></h3>
+                <div class="users-area">
+                    <div class="online-users">
+                        <div class="online-users-heading">
+                            <h3 class="online-users-heading-title">Online Users <span class="badge pull-right" id="userCount"></span></h3>
                         </div>
-                        <div class="panel-body">
+                        <div class="online-users-list">
                             <div class="list-group" id="userList"></div>
                         </div>
                     </div>
                 </div>
             </div>
-        </script>                
+        </script>      
+
         <script src="/socket.io/socket.io.js"></script>
 
         <script src="/bower_components/jquery/dist/jquery.min.js"></script>

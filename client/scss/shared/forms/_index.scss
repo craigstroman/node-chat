@@ -1,0 +1,42 @@
+section {
+	overflow: auto;
+}
+
+textarea {
+	resize: vertical;
+}
+
+input, 
+textarea, 
+select, 
+.uneditable-input {
+  border: 1px solid #bbb;
+  width: 100%;
+  margin-bottom: 15px;
+  @include box_sizing;
+}
+
+input {
+  height: auto !important;
+}
+
+.form-input {
+	input[type="text"],
+	input[type="email"],
+	input[type="password"] {
+		@extend .form-control;
+	}	
+}
+
+
+.form-error {
+	display: block;
+	width: auto;
+}
+
+// Recaptcha
+.g-recaptcha {
+  margin-bottom: 15px;
+}
+
+

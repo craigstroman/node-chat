@@ -10,6 +10,11 @@ A chat room using Node.js and Socket.io.  Based on the tutorial from https://www
 
 ##Version History
 
+######Version 1.3.0
+- Switched CSS to SCSS.
+- Using Gulp to run tasks now.
+- Starting to switch Node.js code to ES6.
+
 ######Version 1.2.0
 - Added a Mongo DB to save and redisplay conversation threads when new users enter chat.
 - Added MomentJS for formatting dates.

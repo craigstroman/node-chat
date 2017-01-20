@@ -1,0 +1,99 @@
+.center {
+	text-align: center;
+}
+
+.center h1 {
+	margin: 0 0 10px 0;
+}
+
+.col-centered {
+	float: none !important;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.lines {
+	position: relative;
+	z-index: 1;
+	&:before {
+		border-top: 2px solid $lighter-gray;
+		content: "";
+		left: 0;
+		margin: 0 auto;
+		position: absolute;
+		right: 0;
+		top: 50%;
+		width: 95%;
+		z-index: -1;
+	}
+	&:after {
+		border-bottom: 2px solid $lighter-gray;
+		content: "";
+		left: 0;
+		margin: 0 auto;
+		position: absolute;
+		right: 0;
+		top: 45%;
+		width: 95%;
+		z-index: -1;		
+	}
+    span { 
+        /* to hide the lines from behind the text, you have to set the background color the same as the container */ 
+        background: #fff; 
+        padding: 0 15px; 
+    }	
+}
+
+.social-login-btn {
+    @extend .btn;
+    color: $white;
+    margin-bottom: 10px;
+    width: 200px;
+    &:hover {
+        color: $white;
+    }
+    .social-login-icon {
+        color: $white;
+        float: left;
+        line-height: 20px;              
+    }
+}
+
+.google-login-btn {
+    background-color: $google-login-btn;
+    &:hover {
+        background-color: darken($google-login-btn, 5%);
+    }
+    .google-icon {
+        @extend .fa;
+        @extend .fa-google-plus;
+    }
+}
+.twitter-login-btn {
+    background-color: $twitter-login-btn;
+    &:hover {
+        background-color: darken($twitter-login-btn, 5%);
+    }
+    .twitter-icon {
+        @extend .fa;
+        @extend .fa-twitter;
+    }                       
+}
+.facebook-login-btn {
+    background-color: $facebook-login-btn;
+    &:hover {
+        background-color: darken($facebook-login-btn, 5%);
+    }
+    .facebook-icon {
+        @extend .fa;
+        @extend .fa-facebook;
+    }               
+}
+
+.debug_dump {
+  clear: both;
+  float: left;
+  width: 100%;
+  margin-top: 45px;
+  @include box_sizing;
+}
