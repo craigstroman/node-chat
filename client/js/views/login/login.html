@@ -1,0 +1,17 @@
+<div class="login-box">
+    <div class="login-box-area">
+        <div class="login-box-well">
+            <form class="login-form" name="loginForm" novalidate="novalidate" ng-submit="login(this)">
+                <div class="login-form-fields" ng-class="{'has-error': loginForm.username.$invalid}">
+                        <input type="text" class="login-form-control" id="nameText" name="username"
+                            placeholder="Enter your username" required ng-model="username" ng-minlength="3" ng-maxlength="10" />
+                        <div class="help-block" ng-show="loginForm.username.$error.required">A username is required.</div>
+                        <div class="help-block" ng-show="loginForm.username.$invalid && loginForm.username.$dirty">{{errorMessage}}</div>
+                </div>
+                <div class="login-form-fields">
+                  <button type="submit" id="nameBtn" class="login-form-btn" ng-disabled="!loginForm.$valid">Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,46 @@
+<div class="chat-room-container">
+    <div class="chat-room-loby">
+        <div class="chat-room-area">
+            <div class="chat-room-panel">
+                <div class="chat-room-heading">Loby</div>
+                <div class="chat-room-text">
+                        <ul id="chatList">
+                          <li class="message-content" ng-repeat="message in messages track by $index">
+                            <div class="message-content-header">
+                              <div class="message-content-header-left">
+                                {{ message.user}}
+                              </div>
+                              <div class="message-content-header-right">
+                                {{ message.created}}
+                              </div>
+                            </div>
+                            <div class="message-body">
+                              {{ message.text }}
+                            </div>
+                          </li>
+                        </ul>
+                </div>
+                <div class="chat-room-footer">
+                    <form name="chatForm" ng-submit="sendChat()">
+                        <input type="text" name="chatInput" ng-model="chatText" class="form-control" placeholder="Enter chat message here." autofocus="true"  aria-labelby="Enter chat message here." tabindex="0" />
+                    </form>
+                </div>
+            </div> <!-- ./chat-room-panel -->
+        </div> <!-- ./chat-room-area -->
+        <div class="users-area">
+            <div class="online-users">
+                <div class="online-users-heading">
+                    <h3 class="online-users-heading-title">Online Users <span class="badge pull-right" id="userCount"></span></h3>
+                </div>
+                <div class="online-users-list">
+                    <div class="list-group" id="userList">
+                        <ul id="user-list">
+                            <li ng-repeat="user in users track by $index">{{ user }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary" ng-click="leaveRoom()">Leave Room</button>
+        </div> <!-- ./users-area -->
+    </div>  <!-- ./chat-room-loby -->
+</div> <!-- ./chat-room-container -->

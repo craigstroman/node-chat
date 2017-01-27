@@ -1,27 +1,27 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const uriString = process.env.MONGODB_URI ||
-                            'mongodb://localhost/chatRoom'; 
+                            'mongodb://localhost/chatRoom';
 
 mongoose.connect(uriString, (err, res) => {
     if ( err ) {
         console.log('ERROR connecting to:' + uriString + '.' + err);
     } else {
         console.log('Succeeded connected to: ' + uriString);
-    }   
+    }
 });
 
 const chatSchema = new Schema({
-    sender: String,
+    user: String,
     msg: String,
-    created: {type: Date, default: Date.now}   
+    created: {type: Date, default: Date.now}
 });
 
 const Chat = mongoose.model('Chat', chatSchema);
 
 module.exports = {
     saveMsg: function(data, cb) {
-        var newMsg = new Chat({msg: data.message, sender: data.sender, created: data.created});
+        var newMsg = new Chat({msg: data.text, user: data.user, created: data.created});
 
         newMsg.save(function(err) {
             cb(err);

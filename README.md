@@ -10,6 +10,9 @@ A chat room using Node.js and Socket.io.  Based on the tutorial from https://www
 
 ##Version History
 
+######Version 1.4.0
+- Switched to using Angular.
+
 ######Version 1.3.0
 - Switched CSS to SCSS.
 - Using Gulp to run tasks now.

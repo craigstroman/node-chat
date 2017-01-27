@@ -22,6 +22,10 @@
                         @extend .btn-lg;
                     }
                 }
+                .recaptcha-box {
+                  margin-left: auto;
+                  margin-right: auto;
+                }
             }
         }
     }

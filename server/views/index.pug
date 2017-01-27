@@ -1,0 +1,15 @@
+doctype html
+html(lang="en")
+    head
+      title= title
+      meta(charset="utf-8")
+      meta(http-equiv="x-ua-compatible" content="ie=edge,chrome=1")
+      meta(name="description" content="Node.js chat room using Sockets.io and Angular.")
+      meta(name="viewport" content="width=device-width, initial-scale=1")
+      link(rel="stylesheet" href="/css/styles.css")
+    body
+      div(class="container" ng-app="nodeChat")
+        div(class="view-container" ui-view)
+      script(src="https://www.google.com/recaptcha/api.js" async defer)
+      script(src="/js/bundle.js")
+

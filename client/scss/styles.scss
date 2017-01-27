@@ -20,19 +20,21 @@
 html,
 body {
     height: 100%;
-} 
+}
 
 .container {
     margin-top: 10px;
     height: 100%;
-    
 
-    // Header
-    @import "shared/header/index";
+    .view-container {
+      height: 100%;
+      // Header
+      @import "shared/header/index";
 
-    // Pages
-    @import "application/index";
+      // Pages
+      @import "application/index";
 
-    // Footer
-    @import "shared/footer/index";    
+      // Footer
+      @import "shared/footer/index";
+    }
 }

@@ -3,34 +3,54 @@
   "version": "1.0.0",
   "description": "Node chat room using Socket.io",
   "scripts": {
-    "start": "node ./app",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "gulp": "babel-node ./node_modules/.bin/gulp"
+    "start": "node ./server/app",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Craig Stroman",
   "license": "ISC",
   "dependencies": {
+    "angular": "^1.6.1",
+    "angular-re-captcha": "^0.2.0",
+    "angular-recaptcha": "^4.0.3",
+    "angular-resource": "^1.6.1",
+    "angular-route": "^1.6.1",
+    "angular-ui-bootstrap": "^2.4.0",
+    "angular-ui-router": "^0.4.2",
+    "babel-polyfill": "^6.22.0",
+    "babel-preset-es2015": "^6.22.0",
+    "babel-register": "^6.22.0",
     "express": "^4.14.0",
+    "lodash": "^4.17.4",
     "moment": "^2.17.1",
     "mongoose": "^4.7.7",
+    "ng-cache-loader": "0.0.22",
     "pug": "^2.0.0-beta6",
     "socket.io": "^1.7.2",
+    "socket.io-client": "^1.7.2",
     "underscore": "^1.8.3"
   },
   "engines": {
     "node": "7.2.1"
   },
   "devDependencies": {
-    "babel": "^6.5.2",
+    "babel-core": "^6.22.1",
     "babel-eslint": "^7.1.1",
-    "babel-preset-es2015": "^6.18.0",
-    "babelify": "^7.3.0",
+    "babel-loader": "^6.2.10",
+    "eslint": "^3.14.0",
+    "eslint-config-airbnb": "^14.0.0",
+    "eslint-config-airbnb-base": "^11.0.1",
+    "eslint-config-angular": "^0.5.0",
+    "eslint-loader": "^1.6.1",
+    "eslint-plugin-angular": "^1.6.1",
+    "eslint-plugin-import": "^2.2.0",
     "gulp": "^3.9.1",
     "gulp-eslint": "^3.0.1",
     "gulp-nodemon": "^2.2.1",
     "gulp-plumber": "^1.1.0",
     "gulp-sass": "^3.1.0",
     "gulp-sourcemaps": "^2.4.0",
-    "require-dir": "^0.3.1"
+    "require-dir": "^0.3.1",
+    "webpack": "^1.14.0",
+    "webpack-stream": "^3.2.0"
   }
 }
