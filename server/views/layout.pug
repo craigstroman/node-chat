@@ -7,8 +7,6 @@ html(lang='en')
     meta(name=name, content=content)
     title #{title}
 
-    link(rel='stylesheet', href='/static/css/styles.css')
-
     block pageSpecificCSS
 
   body
@@ -17,5 +15,4 @@ html(lang='en')
 
       block content
       
-      script(src='/static/js/dropdown.js')
       block pageSpecificJavaScript
