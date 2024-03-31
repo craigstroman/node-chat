@@ -33,7 +33,7 @@ if (nodeEnv === 'development') {
 
 const javascript = nodeEnv === 'development' ? '/static/js/bundle.js' : '/static/js/main.min.js';
 
-app.locals.javascript = javac;
+app.locals.javascript = javascript;
 app.locals.title = 'Node Chat';
 
 app.use('/static', express.static('public'));
