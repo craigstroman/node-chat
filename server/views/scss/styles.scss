@@ -1,0 +1,64 @@
+@import '../../../node_modules/@fortawesome/fontawesome-free/scss/fontawesome.scss';
+@import '../../../node_modules/@fortawesome/fontawesome-free/scss/regular.scss';
+@import '../../../node_modules/@fortawesome/fontawesome-free/scss/solid.scss';
+@import '../../../node_modules/@fortawesome/fontawesome-free/scss/brands.scss';
+@import './imports/variables';
+@import './imports/mixins';
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.wrapper {
+  overflow-x: hidden;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-top: 1.5rem;
+  .content {
+    .heading {
+      margin-bottom: 1.5rem;
+      font-weight: bold;
+    }
+    .btn-container {
+      margin-bottom: 10px;
+      .btn-google {
+        @include button(#d34836);
+        color: #fff;
+        font-size: 1em;
+        width: 200px;
+        .social-icon {
+          font-size: 1.5em;
+        }
+      }
+      .btn-facebook {
+        @include button(#3b5998);
+        color: #fff;
+        font-size: 1em;
+        width: 200px;
+        .social-icon {
+          font-size: 1.5em;
+        }
+      }
+      .btn-github {
+        @include button(#444444);
+        color: #fff;
+        font-size: 1em;
+        width: 200px;
+        .social-icon {
+          font-size: 1.5em;
+        }
+      }
+    }
+  }
+
+  .user-form {
+    button {
+      margin-left: 10px;
+    }
+  }
+
+  .repos-with-notes {
+    list-style-type: none;
+  }
+}
