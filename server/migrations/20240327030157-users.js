@@ -9,11 +9,35 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      user_name: {
+      profileId: {
         type: Sequelize.STRING,
       },
-      created: {
+      token: {
+        type: Sequelize.STRING,
+      },
+      email: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      name: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      profilePicture: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      provider: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      createdAt: {
         type: Sequelize.DATE,
+        allowNull: false,
+      },
+      updatedAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
       },
     });
   },

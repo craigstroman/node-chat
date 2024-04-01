@@ -15,7 +15,10 @@ module.exports = {
       user: {
         type: Sequelize.INTEGER,
       },
-      created: {
+      createdAt: {
+        type: Sequelize.DATE,
+      },
+      updatedAt: {
         type: Sequelize.DATE,
       },
     });
