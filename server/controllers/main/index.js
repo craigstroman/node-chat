@@ -46,8 +46,6 @@ function googleLogin(req, res, next) {
 }
 
 function sessionStatus(req, res, next) {
-  console.log('sessionStatus: ');
-  console.log('req.user: ', req.user);
   res.send({
     user: req.user,
   });
