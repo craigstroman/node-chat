@@ -6,7 +6,6 @@ const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const session = require('express-session');
 const { routes } = require('./routes/index.js');
-const { auth } = require('./config/auth.js');
 
 const app = express();
 
@@ -15,8 +14,6 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 const nodeEnv = process.env.NODE_ENV;
-
-auth(passport); // pass passport for configuration
 
 if (nodeEnv === 'development') {
   const webpack = require('webpack');

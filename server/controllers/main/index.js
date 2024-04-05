@@ -34,17 +34,6 @@ function login(req, res) {
   });
 }
 
-function googleLogin(req, res, next) {
-  const profileCookie = req.cookies['profile'];
-
-  if (profileCookie) {
-    res.clearCookie('profile');
-    res.redirect(profileCookie);
-  } else {
-    res.redirect('/');
-  }
-}
-
 function sessionStatus(req, res, next) {
   res.send({
     user: req.user,
@@ -54,6 +43,5 @@ function sessionStatus(req, res, next) {
 module.exports = {
   main,
   login,
-  googleLogin,
   sessionStatus,
 };

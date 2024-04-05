@@ -9,13 +9,4 @@ router.route('/').get(main);
 
 router.route('/login').get(login);
 
-/**
- * Google auth routes.
- */
-router.route('/auth/google').get(passport.authenticate('google', { scope: ['profile', 'email'] }));
-
-router.route('/auth/google/callback').get(passport.authenticate('google'), googleLogin);
-
-router.route('/api/sessionStatus').get(loggedIn, sessionStatus);
-
 module.exports.routes = router;
