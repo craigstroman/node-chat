@@ -5,26 +5,3 @@ body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
 }
-
-.wrapper {
-  overflow-x: hidden;
-  padding-left: 2rem;
-  padding-right: 2rem;
-  padding-top: 1.5rem;
-  .content {
-    .heading {
-      margin-bottom: 1.5rem;
-      font-weight: bold;
-    }
-  }
-
-  .user-form {
-    button {
-      margin-left: 10px;
-    }
-  }
-
-  .repos-with-notes {
-    list-style-type: none;
-  }
-}

@@ -10,11 +10,6 @@ const socket = io.connect('http://localhost:5000');
 const Main: React.FC = () => {
   return (
     <div className="content">
-      <header>
-        <div className="title">
-          <h1>Welcome to the page</h1>
-        </div>
-      </header>
       <BrowserRouter>
         <main>
           <div className="main-content">
