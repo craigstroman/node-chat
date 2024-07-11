@@ -6,7 +6,10 @@ interface ISocket {
 }
 
 interface IUser {
-  userName: string;
+  id: number;
+  username: string;
+  createdAt: string;
+  updatedAt: string;
   socketId: string;
 }
 
@@ -14,8 +17,13 @@ export const ChatBar: React.FC<ISocket> = ({ socket }) => {
   const [users, setUsers] = useState<IUser[] | null>(null);
 
   useEffect(() => {
-    socket.on('newUserResponse', (data) => setUsers(data));
+    socket.current.on('newUserResponse', (data) => {
+      console.log('newUserResponse: ');
+      console.log('data: ', data);
+      setUsers(data);
+    });
   }, [socket, users]);
+
   return (
     <div className="chat-sidebar">
       <h2>Open Chat</h2>
@@ -24,7 +32,7 @@ export const ChatBar: React.FC<ISocket> = ({ socket }) => {
           <h4>Active Users</h4>
         </div>
         <div className="chat-sidebar__users">
-          {users && users.length >= 1 && users.map((user) => <p>{user.userName}</p>)}
+          {users && users.length >= 1 && users.map((user) => <p key={user.socketId}>{user.username}</p>)}
         </div>
       </div>
     </div>

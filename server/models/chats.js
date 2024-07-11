@@ -1,27 +1,23 @@
 const DataTypes = require('sequelize');
 const { sequelize } = require('../database.js');
 
-const Chat = sequelize.define('chat', {
-  profileId: {
+const Chat = sequelize.define('chats', {
+  text: {
+    type: DataTypes.STRING,
+  },
+  username: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  msg: {
-    type: DataTypes.STRING,
-  },
-  user: {
+  socketId: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  name: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
   createdAt: {
-    type: Sequelize.DATE,
+    type: DataTypes.DATE,
   },
   updatedAt: {
-    type: Sequelize.DATE,
+    type: DataTypes.DATE,
   },
 });
 

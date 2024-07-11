@@ -9,25 +9,15 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      profileId: {
-        type: Sequelize.STRING,
-      },
-      token: {
-        type: Sequelize.STRING,
-      },
-      email: {
+      username: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      name: {
-        type: Sequelize.STRING,
+      online: {
+        type: Sequelize.BOOLEAN,
         allowNull: false,
       },
-      profilePicture: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      provider: {
+      socketId: {
         type: Sequelize.STRING,
         allowNull: false,
       },

@@ -2,18 +2,23 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('chat', {
+    return queryInterface.createTable('chats', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      msg: {
+      text: {
         type: Sequelize.STRING,
       },
-      user: {
-        type: Sequelize.INTEGER,
+      socketId: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      username: {
+        type: Sequelize.STRING,
+        allowNull: false,
       },
       createdAt: {
         type: Sequelize.DATE,

@@ -7,15 +7,16 @@ interface ISocket {
 
 export const ChatFooter: React.FC<ISocket> = ({ socket }) => {
   const [message, setMessage] = useState<string>('');
-  const handleTyping = () => socket.emit('typing', `${localStorage.getItem('userName')} is typing`);
+  const handleTyping = () => socket.current.emit('typing', `${localStorage.getItem('userName')} is typing`);
 
   const handleMessage = (e) => {
+    e.preventDefault();
     if (message.trim() && localStorage.getItem('userName')) {
-      socket.emit('message', {
+      socket.current.emit('sendChat', {
         text: message,
         name: localStorage.getItem('userName'),
-        id: `${socket.id}${Math.random()}`,
-        socketID: socket.id,
+        id: socket.current.id,
+        socketID: socket.current.id,
       });
     }
     setMessage('');

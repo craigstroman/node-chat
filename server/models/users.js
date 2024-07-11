@@ -2,28 +2,16 @@ const DataTypes = require('sequelize');
 const { sequelize } = require('../database.js');
 
 const Users = sequelize.define('users', {
-  profileId: {
+  socketId: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  token: {
+  username: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  email: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  name: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  profilePicture: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  provider: {
-    type: DataTypes.STRING,
+  online: {
+    type: DataTypes.BOOLEAN,
     allowNull: false,
   },
   createdAt: {

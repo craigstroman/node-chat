@@ -10,8 +10,11 @@ interface ISocket {
 
 interface IMessage {
   id: string;
-  name: string;
+  username: string;
   text: string;
+  socketId: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export const Chat: React.FC<ISocket> = ({ socket }) => {
@@ -20,11 +23,19 @@ export const Chat: React.FC<ISocket> = ({ socket }) => {
   const lastMessageRef = useRef<null | HTMLElement>(null);
 
   useEffect(() => {
-    socket.on('messageResponse', (data) => setMessages([...messages, data]));
+    // TODO: Try and figure out why messageResponse is not getting new messages
+    // TODO: Try and figure out why I'm not getting the emit response from the server
+    console.log('socket.current: ', socket.current);
+    console.log('socket.current.id: ', socket.current.id);
+    socket.current.on('messageResponse', (data) => {
+      console.log('messageResponse: ');
+      console.log('data: ', data);
+      setMessages([...messages, ...data]);
+    });
   }, [socket, messages]);
 
   useEffect(() => {
-    socket.on('typingResponse', (data) => setTypingStatus(data));
+    socket.current.on('typingResponse', (data) => setTypingStatus(data));
   }, [socket]);
 
   useEffect(() => {
@@ -37,10 +48,10 @@ export const Chat: React.FC<ISocket> = ({ socket }) => {
       <ChatBar socket={socket} />
       <div className="chat__main">
         <ChatBody
+          socket={socket}
           messages={messages}
           typingStatus={typingStatus}
           lastMessageRef={lastMessageRef}
-          socket={socket}
         />
         <div className="chat__footer">
           <ChatFooter socket={socket} />

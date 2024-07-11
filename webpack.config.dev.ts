@@ -1,6 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
 const ESLintPlugin = require('eslint-webpack-plugin');
+const ErrorOverlayPlugin = require('error-overlay-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 const filePath = path.join(__dirname, './public/js/');
 const fileName = 'bundle.js';
@@ -17,7 +19,7 @@ const ESLintOptions = {
 module.exports = {
   mode: 'development',
 
-  devtool: 'source-map',
+  devtool: 'cheap-module-source-map',
 
   entry: {
     app: [
@@ -33,7 +35,6 @@ module.exports = {
     hotUpdateChunkFilename: '.hot/hot-update.js',
     hotUpdateMainFilename: '.hot/hot-update.json',
   },
-
   watch: false,
   watchOptions: {
     ignored: '/node_modules/',
@@ -95,5 +96,7 @@ module.exports = {
     new webpack.SourceMapDevToolPlugin({
       filename: '[file].map',
     }),
+    new ErrorOverlayPlugin(),
+    new Dotenv(),
   ],
 };

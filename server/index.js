@@ -2,43 +2,19 @@ const path = require('path');
 const http = require('http');
 const { sequelize } = require('./database.js');
 const { app } = require('./app.js');
-const port = 5000;
+const socket = require('./sockets/index');
+const dotenv = require('dotenv');
 
-const socketIO = require('socket.io')(http, {
-  cors: {
-    origin: `http://localhost:${port}`,
-  },
-});
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
-socketIO.on('connection', (socket) => {
-  console.log(`⚡: ${socket.id} user just connected!`);
-  socket.on('message', (data) => {
-    socketIO.emit('messageResponse', data);
-  });
-
-  socket.on('typing', (data) => socket.broadcast.emit('typingResponse', data));
-
-  socket.on('newUser', (data) => {
-    users.push(data);
-    socketIO.emit('newUserResponse', users);
-  });
-
-  socket.on('disconnect', () => {
-    console.log('🔥: A user disconnected');
-    users = users.filter((user) => user.socketID !== socket.id);
-    socketIO.emit('newUserResponse', users);
-    socket.disconnect();
-  });
-});
+const port = process.env.port;
 
 app.set('port', port);
 
 const server = http.createServer(app);
 const io = require('socket.io')(server);
 
-io.on('connection', () => {
-  /* … */
-});
+io.sockets.on('connection', socket);
 
 sequelize
   .sync()
