@@ -3,10 +3,6 @@ const Users = require('../models/users.js');
 const Chat = require('../models/chats.js');
 const models = require('../database.js');
 
-// TODO: Change server to be more like example server and have everything within a socket.sockets.on('connection')
-// TODO: Figure out why chat isn't updating when 2 users are logged in
-// TODO: Add password field for login and add user creation page
-
 module.exports = (socket) => {
   socket.on('user:join', async (data) => {
     console.log('user:join: ');
