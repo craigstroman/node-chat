@@ -1,0 +1,9 @@
+var path = require('path');
+
+path.resolve(__dirname, '../.env');
+module.exports = {
+  config: path.resolve(__dirname, 'server/config/config.js'),
+  'migrations-path': path.resolve(__dirname, 'server/migrations'),
+  'models-path': '',
+  'seeders-path': '',
+};
