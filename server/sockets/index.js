@@ -3,7 +3,7 @@ const Users = require('../models/users.js');
 const Chat = require('../models/chats.js');
 const models = require('../database.js');
 
-// TODO: Change server to be more like example server and have everything within a socket.on('connection')
+// TODO: Change server to be more like example server and have everything within a socket.sockets.on('connection')
 // TODO: Figure out why chat isn't updating when 2 users are logged in
 // TODO: Add password field for login and add user creation page
 
@@ -38,6 +38,7 @@ module.exports = (socket) => {
 
       // Update users list in chat.
       socket.emit('newUserResponse', foundUsers);
+      socket.broadcast.emit('newUserResponse', foundUsers);
     }
 
     const messages = await models.sequelize.query('select * from chats', {
@@ -66,7 +67,7 @@ module.exports = (socket) => {
 
     console.log('users: ', users);
     // Update users list in chat.
-    socket.emit('newUserResponse', users);
+    socket.broadcast.emit('newUserResponse', users);
 
     socket.disconnect();
   });
@@ -82,13 +83,13 @@ module.exports = (socket) => {
     });
   });
 
-  socket.on('sendChat', async (data) => {
+  socket.on('message', async (data) => {
     console.log('sendChat: ');
     console.log('data: ', data);
 
     try {
       if (data.id) {
-        const newChat = await models.sequelize.query(
+        await models.sequelize.query(
           'insert into chats (text, "socketId", username, "createdAt", "updatedAt") values(?, ?, ?, ?, ?)',
           {
             replacements: [data.text, data.id, data.name, new Date().toISOString(), new Date().toISOString()],
@@ -98,16 +99,15 @@ module.exports = (socket) => {
           },
         );
 
-        if (newChat) {
-          const response = await models.sequelize.query('select *  from chats order by id desc limit 1', {
-            type: QueryTypes.SELECT,
-            raw: true,
-          });
+        const response = await models.sequelize.query('select *  from chats order by id desc limit 1', {
+          type: QueryTypes.SELECT,
+          raw: true,
+        });
 
-          console.log('response: ', response);
+        console.log('response: ', response);
+        socket.emit('messageResponse', response);
 
-          socket.emit('messageResponse', response);
-        }
+        socket.broadcast.emit('messageResponse', response);
       }
     } catch (error) {
       console.log('error: ', error);
