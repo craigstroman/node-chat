@@ -15,7 +15,6 @@ export const Home: React.FC<IHome> = ({ socket }) => {
     e.preventDefault();
     if (userName.length >= 1) {
       localStorage.setItem('userName', userName);
-      console.log('userName: ', userName);
       socket.current.emit('user:join', { user: userName, socketID: socket.current.id });
       navigate('/chat');
       setError('');

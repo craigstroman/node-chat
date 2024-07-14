@@ -12,7 +12,7 @@ export const ChatFooter: React.FC<ISocket> = ({ socket }) => {
   const handleMessage = (e) => {
     e.preventDefault();
     if (message.trim() && localStorage.getItem('userName')) {
-      socket.current.emit('sendChat', {
+      socket.current.emit('message', {
         text: message,
         name: localStorage.getItem('userName'),
         id: socket.current.id,

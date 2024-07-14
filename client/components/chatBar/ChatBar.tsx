@@ -18,8 +18,6 @@ export const ChatBar: React.FC<ISocket> = ({ socket }) => {
 
   useEffect(() => {
     socket.current.on('newUserResponse', (data) => {
-      console.log('newUserResponse: ');
-      console.log('data: ', data);
       setUsers(data);
     });
   }, [socket, users]);

@@ -21,8 +21,6 @@ interface ISocket {
 export const ChatBody: React.FC<ISocket> = ({ socket, messages, typingStatus, lastMessageRef }) => {
   const navigate = useNavigate();
 
-  console.log('messages: ', messages);
-
   const handleLeaveChat = () => {
     socket.current.emit('leaveChat', {
       socketID: socket.current.id,

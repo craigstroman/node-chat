@@ -23,15 +23,14 @@ export const Chat: React.FC<ISocket> = ({ socket }) => {
   const lastMessageRef = useRef<null | HTMLElement>(null);
 
   useEffect(() => {
-    // TODO: Try and figure out why messageResponse is not getting new messages
-    // TODO: Try and figure out why I'm not getting the emit response from the server
-    console.log('socket.current: ', socket.current);
-    console.log('socket.current.id: ', socket.current.id);
-    socket.current.on('messageResponse', (data) => {
-      console.log('messageResponse: ');
+    const setReceivedMessages = (data) => {
+      console.log('new messages: ');
+
       console.log('data: ', data);
       setMessages([...messages, ...data]);
-    });
+    };
+
+    socket.current.on('messageResponse', setReceivedMessages);
   }, [socket, messages]);
 
   useEffect(() => {
