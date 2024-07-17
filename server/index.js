@@ -1,6 +1,4 @@
 const path = require('path');
-// const http = require('http');
-const cors = require('cors');
 const { sequelize } = require('./database.js');
 const { app } = require('./app.js');
 const socket = require('./sockets/index');
@@ -12,23 +10,11 @@ const port = process.env.port;
 
 app.set('port', port);
 
-// TODO: Figure out why chat not showing up for another user logged in, log the other user in using the incognito window in Chrome
-// TODO: Try and figure out why I can't match the server code of the example chat I'm looking at
-
-// const server = http.createServer(app);
-// const io = require('socket.io')(server);
 const http = require('http').createServer(app);
-// const io = require('socket.io', (http,
-// {
-//   cors: {
-//     origin: `http://localhost.00000:${port}`,
-//   },
-// }));
 
 const io = require('socket.io')(http);
 
 io.cors = { origin: `http://localhost:${port}` };
-
 io.on('connection', socket);
 
 sequelize
