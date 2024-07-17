@@ -6,56 +6,134 @@ interface IHome {
   socket: any;
 }
 
+// TODO: Finish making new login page with password
+// TODO: Create create account page
+// TODO: Create endpoint for creating an account and it be normal endpoint
+
 export const Home: React.FC<IHome> = ({ socket }) => {
   const navigate = useNavigate();
-  const [userName, setUserName] = useState<string>('');
-  const [error, setError] = useState<string>('');
+  const [username, setUsername] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [type, setType] = useState<string>('password');
+  const [usernameError, setUsernameError] = useState<string>('');
+  const [passwordError, setPasswordError] = useState<string>('');
+
+  const handleUsernameChange = (e) => {
+    e.preventDefault();
+    const { value } = e.target;
+    if (value) {
+      setUsername(value);
+      setUsernameError('');
+    } else {
+      setUsername('');
+      setUsernameError('Username is required.');
+    }
+  };
+
+  const handlePasswordChange = (e) => {
+    e.preventDefault();
+    const { value } = e.target;
+    if (value) {
+      setPassword(value);
+      setPasswordError('');
+    } else {
+      setPassword('');
+      setPasswordError('Password is required.');
+    }
+  };
+
+  const handleShowPassword = (e) => {
+    const { checked } = e.target;
+
+    if (checked) {
+      setType('text');
+    } else {
+      setType('password');
+    }
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (userName.length >= 1) {
-      localStorage.setItem('userName', userName);
-      socket.current.emit('user:join', { user: userName, socketID: socket.current.id });
+
+    if (username.length >= 1 && password.length >= 1) {
+      localStorage.setItem('userName', username);
+      socket.current.emit('user:join', { user: username, password, socketID: socket.current.id });
       navigate('/chat');
-      setError('');
-    }
-    setError('Username is required.');
-  };
+      setUsernameError('');
+      setPasswordError('');
+    } else {
+      if (!username.length) {
+        setUsernameError('Username is required.');
+      }
 
-  const handleInputChange = (e) => {
-    e.preventDefault();
-    if (e.target.value.length >= 1) {
-      setUserName(e.target.value);
-      setError('');
+      if (!password.length) {
+        setUsernameError('Password is required.');
+      }
     }
-    setError('Username is required.');
   };
-
-  useEffect(() => {
-    if (userName) {
-      setError('');
-    }
-  }, [userName]);
 
   return (
     <form onSubmit={(e) => handleSubmit(e)}>
       <h2>Sign in to Open Chat</h2>
-      <div className="input-container">
-        <label htmlFor="username">Username:</label>
-        <input
-          type="text"
-          name="username"
-          id="username"
-          value={userName}
-          onChange={(e) => handleInputChange(e)}
-        />
-        <div className="input-error">{error && error}</div>
+      <div className="form-container">
+        <div className="form-row">
+          <input
+            type="text"
+            className="input"
+            name="username"
+            id="username"
+            value={username}
+            onChange={(e) => handleUsernameChange(e)}
+            placeholder=""
+          />
+          <label htmlFor="username" className="floating-label">
+            Username:
+          </label>
+        </div>
+        <div className="form-row">
+          <input
+            type={type}
+            className="input"
+            name="password"
+            id="password"
+            value={password}
+            placeholder=""
+            onChange={(e) => handlePasswordChange(e)}
+          />
+          <label htmlFor="password" className="floating-label">
+            Password:
+          </label>
+        </div>
+
+        <div className="form-row">
+          <label htmlFor="showPassword" className="show-password-label">
+            Show Password
+          </label>
+          <input
+            type="checkbox"
+            name="showPassword"
+            id="showPassword"
+            onChange={(e) => handleShowPassword(e)}
+            placeholder=""
+          />
+        </div>
+
+        <div className="input-error">
+          {usernameError ||
+            (passwordError && (
+              <React.Fragment>
+                <div>{usernameError}</div>
+                <div>{passwordError}</div>
+              </React.Fragment>
+            ))}
+        </div>
       </div>
       <div className="button-container">
         <button type="submit" className="input-button">
           Log In
         </button>
       </div>
+      <div className="text">Don't have an account? Create One</div>
     </form>
   );
 };
