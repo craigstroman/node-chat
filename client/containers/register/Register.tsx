@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import './register.scss';
 
 export const Register: React.FC = () => {
+  const [visiblePassword, setVisiblePassword] = useState<boolean>(false);
+  const [visibleConfirmPassword, setVisibleConfirmPassword] = useState<boolean>(false);
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -87,6 +89,22 @@ export const Register: React.FC = () => {
     console.log(formData);
   };
 
+  const handleShowPassword = (e) => {
+    if (visiblePassword) {
+      setVisiblePassword(false);
+    } else {
+      setVisiblePassword(true);
+    }
+  };
+
+  const handleShowConfirmPassword = (e) => {
+    if (visibleConfirmPassword) {
+      setVisibleConfirmPassword(false);
+    } else {
+      setVisibleConfirmPassword(true);
+    }
+  };
+
   return (
     <div className="container">
       <h2>Register to Chat</h2>
@@ -154,7 +172,7 @@ export const Register: React.FC = () => {
           </div>
           <div className="form-row">
             <input
-              type="password"
+              type={visiblePassword ? 'text' : 'password'}
               className="input"
               name="password"
               id="password"
@@ -162,6 +180,9 @@ export const Register: React.FC = () => {
               onChange={(e) => handleInputChange(e)}
               placeholder=""
             />
+            <p className="toggle-password" onClick={handleShowPassword}>
+              {visiblePassword ? 'Hide' : 'Show'}
+            </p>
             <label htmlFor="password" className="floating-label">
               Password*
             </label>
@@ -169,7 +190,7 @@ export const Register: React.FC = () => {
           </div>
           <div className="form-row">
             <input
-              type="password"
+              type={visibleConfirmPassword ? 'text' : 'password'}
               className="input"
               name="confirmPassword"
               id="confirmPassword"
@@ -180,6 +201,9 @@ export const Register: React.FC = () => {
             <label htmlFor="confirmPassword" className="floating-label">
               Confirm Password*
             </label>
+            <p className="toggle-password" onClick={handleShowConfirmPassword}>
+              {visibleConfirmPassword ? 'Hide' : 'Show'}
+            </p>
             <div className="input-error">{formError.confirmPassword && formError.confirmPassword}</div>
           </div>
         </div>
