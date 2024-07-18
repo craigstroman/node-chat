@@ -1,0 +1,194 @@
+import React, { useState } from 'react';
+import './register.scss';
+
+export const Register: React.FC = () => {
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    username: '',
+    password: '',
+    confirmPassword: '',
+  });
+
+  const [formError, setFormError] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    username: '',
+    password: '',
+    confirmPassword: '',
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value, classList } = e.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+
+    setFormError((prevFormErrorData) => ({
+      ...prevFormErrorData,
+      [name]: '',
+    }));
+    classList.remove('error');
+
+    if (name === 'firstName' && !value.length) {
+      setFormError((prevFormErrorData) => ({
+        ...prevFormErrorData,
+        firstName: 'First name is required.',
+      }));
+      classList.add('error');
+    }
+
+    if (name === 'lastName' && !value.length) {
+      setFormError((prevFormErrorData) => ({
+        ...prevFormErrorData,
+        lastName: 'Last name is required.',
+      }));
+      classList.add('error');
+    }
+
+    if (name === 'email' && !value.length) {
+      setFormError((prevFormErrorData) => ({
+        ...prevFormErrorData,
+        email: 'Email is required.',
+      }));
+      classList.add('error');
+    }
+
+    if (name === 'username' && !value.length) {
+      setFormError((prevFormErrorData) => ({
+        ...prevFormErrorData,
+        username: 'Username is required.',
+      }));
+      classList.add('error');
+    }
+
+    if (name === 'password' && !value.length) {
+      setFormError((prevFormErrorData) => ({
+        ...prevFormErrorData,
+        password: 'Password is required.',
+      }));
+      classList.add('error');
+    }
+
+    if (name === 'confirmPassword' && !value.length) {
+      setFormError((prevFormErrorData) => ({
+        ...prevFormErrorData,
+        confirmPassword: 'Confirm password is required.',
+      }));
+      classList.add('error');
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(formData);
+  };
+
+  return (
+    <div className="container">
+      <h2>Register to Chat</h2>
+      <form onSubmit={(e) => handleSubmit(e)}>
+        <div className="form-container">
+          <div className="form-row">
+            <input
+              type="text"
+              className="input"
+              name="firstName"
+              id="firstName"
+              value={formData.firstName}
+              onChange={(e) => handleInputChange(e)}
+              placeholder=""
+            />
+            <label htmlFor="firstName" className="floating-label">
+              First Name*
+            </label>
+            <div className="input-error">{formError.firstName && formError.firstName}</div>
+          </div>
+          <div className="form-row">
+            <input
+              type="text"
+              className="input"
+              name="lastName"
+              id="lastName"
+              value={formData.lastName}
+              onChange={(e) => handleInputChange(e)}
+              placeholder=""
+            />
+            <label htmlFor="lastName" className="floating-label">
+              Last Name*
+            </label>
+            <div className="input-error">{formError.lastName && formError.lastName}</div>
+          </div>
+          <div className="form-row">
+            <input
+              type="email"
+              className="input"
+              name="email"
+              id="email"
+              value={formData.email}
+              onChange={(e) => handleInputChange(e)}
+              placeholder=""
+            />
+            <label htmlFor="email" className="floating-label">
+              Email*
+            </label>
+            <div className="input-error">{formError.email && formError.email}</div>
+          </div>
+          <div className="form-row">
+            <input
+              type="text"
+              className="input"
+              name="username"
+              id="username"
+              value={formData.username}
+              onChange={(e) => handleInputChange(e)}
+              placeholder=""
+            />
+            <label htmlFor="username" className="floating-label">
+              Username*
+            </label>
+            <div className="input-error">{formError.username && formError.username}</div>
+          </div>
+          <div className="form-row">
+            <input
+              type="password"
+              className="input"
+              name="password"
+              id="password"
+              value={formData.password}
+              onChange={(e) => handleInputChange(e)}
+              placeholder=""
+            />
+            <label htmlFor="password" className="floating-label">
+              Password*
+            </label>
+            <div className="input-error">{formError.password && formError.password}</div>
+          </div>
+          <div className="form-row">
+            <input
+              type="password"
+              className="input"
+              name="confirmPassword"
+              id="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={(e) => handleInputChange(e)}
+              placeholder=""
+            />
+            <label htmlFor="confirmPassword" className="floating-label">
+              Confirm Password*
+            </label>
+            <div className="input-error">{formError.confirmPassword && formError.confirmPassword}</div>
+          </div>
+        </div>
+        <div className="button-container">
+          <button type="submit" name="submit" className="input-button">
+            Register
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+};

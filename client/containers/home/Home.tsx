@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import './home.scss';
 
 interface IHome {
@@ -133,7 +133,10 @@ export const Home: React.FC<IHome> = ({ socket }) => {
           Log In
         </button>
       </div>
-      <div className="text">Don't have an account? Create One</div>
+      <div className="text">
+        Don't have an account?&nbsp;
+        <Link to="/register">Create One</Link>
+      </div>
     </form>
   );
 };
