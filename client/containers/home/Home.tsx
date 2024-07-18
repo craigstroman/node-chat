@@ -17,6 +17,7 @@ export const Home: React.FC<IHome> = ({ socket }) => {
   const [type, setType] = useState<string>('password');
   const [usernameError, setUsernameError] = useState<string>('');
   const [passwordError, setPasswordError] = useState<string>('');
+  const [visible, setVisible] = useState<boolean>(false);
 
   const handleUsernameChange = (e) => {
     e.preventDefault();
@@ -47,12 +48,10 @@ export const Home: React.FC<IHome> = ({ socket }) => {
   };
 
   const handleShowPassword = (e) => {
-    const { checked } = e.target;
-
-    if (checked) {
-      setType('text');
+    if (visible) {
+      setVisible(false);
     } else {
-      setType('password');
+      setVisible(true);
     }
   };
 
@@ -97,7 +96,7 @@ export const Home: React.FC<IHome> = ({ socket }) => {
         </div>
         <div className="form-row">
           <input
-            type={type}
+            type={visible ? 'text' : 'password'}
             className="input"
             name="password"
             id="password"
@@ -105,23 +104,13 @@ export const Home: React.FC<IHome> = ({ socket }) => {
             placeholder=""
             onChange={(e) => handlePasswordChange(e)}
           />
+          <p className="toggle-password" onClick={handleShowPassword}>
+            {visible ? 'Hide' : 'Show'}
+          </p>
           <label htmlFor="password" className="floating-label">
             Password:
           </label>
           <div className="input-error">{passwordError && passwordError}</div>
-        </div>
-
-        <div className="form-row">
-          <label htmlFor="showPassword" className="show-password-label">
-            Show Password
-          </label>
-          <input
-            type="checkbox"
-            name="showPassword"
-            id="showPassword"
-            onChange={(e) => handleShowPassword(e)}
-            placeholder=""
-          />
         </div>
       </div>
       <div className="button-container">
