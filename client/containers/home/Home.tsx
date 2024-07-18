@@ -20,25 +20,29 @@ export const Home: React.FC<IHome> = ({ socket }) => {
 
   const handleUsernameChange = (e) => {
     e.preventDefault();
-    const { value } = e.target;
+    const { value, classList } = e.target;
     if (value) {
       setUsername(value);
       setUsernameError('');
+      classList.remove('error');
     } else {
       setUsername('');
       setUsernameError('Username is required.');
+      classList.add('error');
     }
   };
 
   const handlePasswordChange = (e) => {
     e.preventDefault();
-    const { value } = e.target;
+    const { value, classList } = e.target;
     if (value) {
       setPassword(value);
       setPasswordError('');
+      classList.remove('error');
     } else {
       setPassword('');
       setPasswordError('Password is required.');
+      classList.add('error');
     }
   };
 
@@ -89,6 +93,7 @@ export const Home: React.FC<IHome> = ({ socket }) => {
           <label htmlFor="username" className="floating-label">
             Username:
           </label>
+          <div className="input-error">{usernameError && usernameError}</div>
         </div>
         <div className="form-row">
           <input
@@ -103,6 +108,7 @@ export const Home: React.FC<IHome> = ({ socket }) => {
           <label htmlFor="password" className="floating-label">
             Password:
           </label>
+          <div className="input-error">{passwordError && passwordError}</div>
         </div>
 
         <div className="form-row">
@@ -116,16 +122,6 @@ export const Home: React.FC<IHome> = ({ socket }) => {
             onChange={(e) => handleShowPassword(e)}
             placeholder=""
           />
-        </div>
-
-        <div className="input-error">
-          {usernameError ||
-            (passwordError && (
-              <React.Fragment>
-                <div>{usernameError}</div>
-                <div>{passwordError}</div>
-              </React.Fragment>
-            ))}
         </div>
       </div>
       <div className="button-container">

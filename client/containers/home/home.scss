@@ -45,6 +45,9 @@ form {
           top: -8px;
           font-size: 13px;
         }
+        &.error {
+          border-color: #f00;
+        }
       }
       margin-top: 1.5rem;
       margin-bottom: 1.5rem;
