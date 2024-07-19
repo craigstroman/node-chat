@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './register.scss';
+import { error } from 'console';
 
 export const Register: React.FC = () => {
   const [visiblePassword, setVisiblePassword] = useState<boolean>(false);
@@ -21,6 +22,77 @@ export const Register: React.FC = () => {
     password: '',
     confirmPassword: '',
   });
+
+  const validateEmail = async (email: string) => {
+    return String(email)
+    .toLowerCase()
+    .match(
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    );
+  }
+
+const validateForm = () => {
+  const errors = {};
+
+  if (!formData.firstName.length) {
+    errors['firstName'] = 'First name is required.';
+    const firstNameInput: HTMLElement = document.getElementById('firstName') as HTMLElement;
+    firstNameInput.classList.add('error');
+  }
+
+  if (!formData.lastName.length) {
+    errors['lastName'] = 'Last name is required.';
+    const lastNameInput: HTMLElement = document.getElementById('lastName') as HTMLElement;
+    lastNameInput.classList.add('error');
+  }
+
+  if (!formData.email.length) {
+    errors['email'] = 'Email is required.';
+    const  emailInput: HTMLElement = document.getElementById('email') as HTMLElement;
+    emailInput.classList.add('error');
+  }
+
+  if (!formData.username.length) {
+    errors['username'] = 'Username is required.';
+    const usernameInput: HTMLElement = document.getElementById('username') as HTMLElement;
+    usernameInput.classList.add('error');
+  }
+
+  if (!formData.password.length) {
+    errors['password'] = 'Password is required.';
+   const passwordInput: HTMLElement = document.getElementById('password') as HTMLElement;
+    passwordInput.classList.add('error');
+  }
+
+  if (!formData.confirmPassword.length) {
+    errors['confirmPassword'] = 'Confirm password is required.';
+    const confirmPasswordInput: HTMLElement = document.getElementById('confirmPassword') as HTMLElement;  
+    confirmPasswordInput.classList.add('error');
+  }
+
+  if (Object.keys(errors).length >= 1) {
+    setFormError({
+      firstName: errors['firstName'] || '',
+      lastName: errors['lastName'] || '',
+      email: errors['email'] || '',
+      username: errors['username'] || '',
+      password: errors['password'] || '',
+      confirmPassword: errors['confirmPassword'] || '',
+    });
+
+    return false;
+  } else {
+    setFormError({
+      firstName: '',
+      lastName: '',
+      email: '',
+      username: '',
+      password: '',
+      confirmPassword: '',
+    })
+    return true;
+  }
+}
 
   const handleInputChange = (e) => {
     const { name, value, classList } = e.target;
@@ -86,7 +158,9 @@ export const Register: React.FC = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+    if (validateForm()) {
+      console.log('Form is valid');
+    }
   };
 
   const handleShowPassword = (e) => {
