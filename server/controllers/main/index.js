@@ -34,6 +34,12 @@ function login(req, res) {
   });
 }
 
+function register(req, res, next) {
+  console.log('req:', req.body);
+
+  res.send(true);
+}
+
 function sessionStatus(req, res, next) {
   res.send({
     user: req.user,
@@ -43,5 +49,6 @@ function sessionStatus(req, res, next) {
 module.exports = {
   main,
   login,
+  register,
   sessionStatus,
 };
