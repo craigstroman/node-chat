@@ -1,48 +1,50 @@
 const { QueryTypes } = require('sequelize');
+const bcrypt = require('bcrypt');
+const models = require('../database.js');
 const Users = require('../models/users.js');
 const Chat = require('../models/chats.js');
-const models = require('../database.js');
 
 module.exports = (socket) => {
   socket.on('user:join', async (data) => {
-    console.log('user:join: ');
-    console.log('data: ', data);
-    const user = data.user;
-    const socketId = data.socketID;
+    const { user, password, socketId } = data;
 
-    const response = await Users.findOrCreate({
-      where: { username: user },
-      defaults: {
-        username: user,
-        createdAt: Date.now(),
-        updatedAt: Date.now(),
-      },
-      raw: true,
-    });
-
-    if (response[0].id) {
-      await models.sequelize.query('update users set online = true, "socketId" = ? where id = ?', {
-        replacements: [socketId, response[0].id],
-        type: QueryTypes.UPDATE,
-        raw: true,
-      });
-
-      const foundUsers = await models.sequelize.query('select * from users where online = true', {
-        type: QueryTypes.SELECT,
-        raw: true,
-      });
-
-      // Update users list in chat.
-      socket.emit('newUserResponse', foundUsers);
-      socket.broadcast.emit('newUserResponse', foundUsers);
-    }
-
-    const messages = await models.sequelize.query('select * from chats', {
+    const response = await models.sequelize.query('select * From users where username = ?', {
+      replacements: [user],
       type: QueryTypes.SELECT,
       raw: true,
     });
 
-    socket.emit('messageResponse', messages);
+    if (response) {
+      const id = response[0].id;
+      bcrypt.compare(password, response[0].password, async (error, result) => {
+        if (result) {
+          await models.sequelize.query('update users set online = true, "socketId" = ? where id = ?', {
+            replacements: [socketId, id],
+            type: QueryTypes.UPDATE,
+            raw: true,
+          });
+          const foundUsers = await models.sequelize.query('select * from users where online = true', {
+            type: QueryTypes.SELECT,
+            raw: true,
+          });
+
+          // Update users list in chat.
+          socket.emit('newUserResponse', foundUsers);
+          socket.broadcast.emit('newUserResponse', foundUsers);
+          const messages = await models.sequelize.query('select * from chats', {
+            type: QueryTypes.SELECT,
+            raw: true,
+          });
+          socket.emit('messageResponse', messages);
+        } else {
+          // TODO: Figure out how to return an error when logging in fails because of invalid password or user
+          console.log('error:');
+          console.log(error);
+          //  socket.emit('Connect_failed ', 'There was an error logging in.');
+          return new Error('Invalid username or password.');
+        }
+      });
+    }
   });
 
   socket.on('leaveChat', async (data) => {

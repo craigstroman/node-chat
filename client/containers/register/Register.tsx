@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './register.scss';
-import { error } from 'console';
 
 export const Register: React.FC = () => {
+  const navigate = useNavigate();
   const [visiblePassword, setVisiblePassword] = useState<boolean>(false);
   const [visibleConfirmPassword, setVisibleConfirmPassword] = useState<boolean>(false);
   const [formData, setFormData] = useState({
@@ -156,10 +158,23 @@ export const Register: React.FC = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
-      console.log('Form is valid');
+      try {
+        await axios.post('/signUp', {
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          username: formData.username,
+          password: formData.password,
+        });
+
+        navigate('/');
+      } catch (error) {
+        console.log('There was an error: ');
+        console.log(error);
+      }
     }
   };
 

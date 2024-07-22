@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import './home.scss';
 
@@ -15,6 +16,7 @@ export const Home: React.FC<IHome> = ({ socket }) => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [type, setType] = useState<string>('password');
+  const [error, setError] = useState<string>('');
   const [usernameError, setUsernameError] = useState<string>('');
   const [passwordError, setPasswordError] = useState<string>('');
   const [visible, setVisible] = useState<boolean>(false);
@@ -55,15 +57,31 @@ export const Home: React.FC<IHome> = ({ socket }) => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (username.length >= 1 && password.length >= 1) {
-      localStorage.setItem('userName', username);
-      socket.current.emit('user:join', { user: username, password, socketID: socket.current.id });
-      navigate('/chat');
-      setUsernameError('');
-      setPasswordError('');
+      console.log('inside here: ');
+      console.log('username: ', username);
+      console.log('password: ', password);
+      // TODO: Figure out why this request doesn't work when I type valid user but invalid password. Trying to show error for invalid password.
+      // Try adding headers and content type to get axios post working
+      const result = await axios.post('/login', {
+        username,
+        password,
+      });
+      console.log('result: ', result);
+      if (result.status === 200) {
+        localStorage.setItem('userName', username);
+        socket.current.emit('user:join', { user: username, password, socketId: socket.current.id });
+        navigate('/chat');
+        setUsernameError('');
+        setPasswordError('');
+        setError('');
+      } else {
+        setError('Invalid username or password.');
+        console.log('inside here: ');
+      }
     } else {
       if (!username.length) {
         setUsernameError('Username is required.');
@@ -111,6 +129,9 @@ export const Home: React.FC<IHome> = ({ socket }) => {
             Password:
           </label>
           <div className="input-error">{passwordError && passwordError}</div>
+        </div>
+        <div className="form-row">
+          <div className="input-error">{error && error}</div>
         </div>
       </div>
       <div className="button-container">
