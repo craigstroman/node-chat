@@ -37,10 +37,6 @@ module.exports = (socket) => {
           });
           socket.emit('messageResponse', messages);
         } else {
-          // TODO: Figure out how to return an error when logging in fails because of invalid password or user
-          console.log('error:');
-          console.log(error);
-          //  socket.emit('Connect_failed ', 'There was an error logging in.');
           return new Error('Invalid username or password.');
         }
       });
