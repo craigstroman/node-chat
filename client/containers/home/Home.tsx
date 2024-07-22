@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios,  { AxiosResponse } from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import './home.scss';
 
@@ -7,9 +7,6 @@ interface IHome {
   socket: any;
 }
 
-// TODO: Finish making new login page with password
-// TODO: Create create account page
-// TODO: Create endpoint for creating an account and it be normal endpoint
 
 export const Home: React.FC<IHome> = ({ socket }) => {
   const navigate = useNavigate();
@@ -62,15 +59,16 @@ export const Home: React.FC<IHome> = ({ socket }) => {
 
     if (username.length >= 1 && password.length >= 1) {
       console.log('inside here: ');
-      console.log('username: ', username);
-      console.log('password: ', password);
-      // TODO: Figure out why this request doesn't work when I type valid user but invalid password. Trying to show error for invalid password.
-      // Try adding headers and content type to get axios post working
-      const result = await axios.post('/login', {
+      const headers = {
+        'Content-Type': 'application/json',
+      }
+      const result: AxiosResponse|any = await axios.post('/login', {
         username,
         password,
+      }, { headers }).catch((err) => { 
+        console.log('error: ', error)
       });
-      console.log('result: ', result);
+
       if (result.status === 200) {
         localStorage.setItem('userName', username);
         socket.current.emit('user:join', { user: username, password, socketId: socket.current.id });
@@ -80,7 +78,6 @@ export const Home: React.FC<IHome> = ({ socket }) => {
         setError('');
       } else {
         setError('Invalid username or password.');
-        console.log('inside here: ');
       }
     } else {
       if (!username.length) {
