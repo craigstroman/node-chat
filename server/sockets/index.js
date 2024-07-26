@@ -4,6 +4,8 @@ const models = require('../database.js');
 const Users = require('../models/users.js');
 const Chat = require('../models/chats.js');
 
+// TODO: Work on error message returned when the user doesn't exist
+
 module.exports = (socket) => {
   socket.on('user:join', async (data) => {
     const { user, password, socketId } = data;
@@ -44,10 +46,7 @@ module.exports = (socket) => {
   });
 
   socket.on('leaveChat', async (data) => {
-    console.log('leaveChat: ');
-    console.log('data: ', data);
     const socketId = data.socketID;
-    console.log('data: ', data);
     await models.sequelize.query('update users set online = false where "socketId" = ?', {
       replacements: [socketId],
       type: QueryTypes.UPDATE,
@@ -59,7 +58,6 @@ module.exports = (socket) => {
       raw: true,
     });
 
-    console.log('users: ', users);
     // Update users list in chat.
     socket.broadcast.emit('newUserResponse', users);
 
@@ -67,7 +65,6 @@ module.exports = (socket) => {
   });
 
   socket.on('user:updateStatus', async (data) => {
-    console.log('user:updateStatus: ');
     const socketId = data.socketID;
 
     await models.sequelize.query('update users set online = true where "socketId" = ?', {
@@ -78,9 +75,6 @@ module.exports = (socket) => {
   });
 
   socket.on('message', async (data) => {
-    console.log('sendChat: ');
-    console.log('data: ', data);
-
     try {
       if (data.id) {
         await models.sequelize.query(
@@ -98,7 +92,6 @@ module.exports = (socket) => {
           raw: true,
         });
 
-        console.log('response: ', response);
         socket.emit('messageResponse', response);
 
         socket.broadcast.emit('messageResponse', response);
@@ -106,5 +99,10 @@ module.exports = (socket) => {
     } catch (error) {
       console.log('error: ', error);
     }
+  });
+
+  socket.on('typing', (data) => {
+    console.log('data: ', data);
+    socket.broadcast.emit('typingResponse', data);
   });
 };

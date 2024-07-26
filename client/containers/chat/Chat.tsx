@@ -24,9 +24,6 @@ export const Chat: React.FC<ISocket> = ({ socket }) => {
 
   useEffect(() => {
     const setReceivedMessages = (data) => {
-      console.log('new messages: ');
-
-      console.log('data: ', data);
       setMessages([...messages, ...data]);
     };
 
@@ -34,7 +31,13 @@ export const Chat: React.FC<ISocket> = ({ socket }) => {
   }, [socket, messages]);
 
   useEffect(() => {
-    socket.current.on('typingResponse', (data) => setTypingStatus(data));
+    socket.current.on('typingResponse', (data) => {
+      if (data) {
+        setTypingStatus(data);
+      } else {
+        console.log('User is no longer typing');
+      }
+    });
   }, [socket]);
 
   useEffect(() => {
@@ -46,14 +49,9 @@ export const Chat: React.FC<ISocket> = ({ socket }) => {
     <div className="chat-window">
       <ChatBar socket={socket} />
       <div className="chat__main">
-        <ChatBody
-          socket={socket}
-          messages={messages}
-          typingStatus={typingStatus}
-          lastMessageRef={lastMessageRef}
-        />
+        <ChatBody socket={socket} messages={messages} lastMessageRef={lastMessageRef} />
         <div className="chat__footer">
-          <ChatFooter socket={socket} />
+          <ChatFooter socket={socket} typingStatus={typingStatus} />
         </div>
       </div>
     </div>

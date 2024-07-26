@@ -13,12 +13,11 @@ interface IMessage {
 
 interface ISocket {
   messages: IMessage[];
-  typingStatus: any;
   lastMessageRef: any;
   socket: any;
 }
 
-export const ChatBody: React.FC<ISocket> = ({ socket, messages, typingStatus, lastMessageRef }) => {
+export const ChatBody: React.FC<ISocket> = ({ socket, messages, lastMessageRef }) => {
   const navigate = useNavigate();
 
   const handleLeaveChat = () => {
@@ -46,9 +45,6 @@ export const ChatBody: React.FC<ISocket> = ({ socket, messages, typingStatus, la
               <p className="chat-body__message-text">{message.text}</p>
             </div>
           ))}
-      </div>
-      <div className="chat-body__message-status">
-        <p>{typingStatus}</p>
       </div>
       <div ref={lastMessageRef} />
     </div>
