@@ -12,7 +12,7 @@ export const ChatFooter: React.FC<IFooter> = ({ socket, typingStatus }) => {
 
   const timeOutFunction = () => {
     socket.current.emit('typing', {
-      status: '',
+      userTyping: false,
       user: localStorage.getItem('userName'),
     });
   };
@@ -21,7 +21,7 @@ export const ChatFooter: React.FC<IFooter> = ({ socket, typingStatus }) => {
     const { value } = e.target;
     if (value) {
       socket.current.emit('typing', {
-        status: 'typing',
+        userTyping: true,
         user: localStorage.getItem('userName'),
       });
     }
@@ -49,7 +49,11 @@ export const ChatFooter: React.FC<IFooter> = ({ socket, typingStatus }) => {
 
   return (
     <div className="chat-footer">
-      <div className="chat-footer__typing-text">{typingStatus}</div>
+      <div className="chat-footer__typing-text">
+        {typingStatus && typingStatus.userTyping && (
+          <React.Fragment>{typingStatus.user} is typing...</React.Fragment>
+        )}
+      </div>
       <form onSubmit={handleMessage}>
         <input
           type="text"
