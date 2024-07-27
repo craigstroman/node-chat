@@ -1,10 +1,6 @@
 const { QueryTypes } = require('sequelize');
 const bcrypt = require('bcrypt');
 const models = require('../database.js');
-const Users = require('../models/users.js');
-const Chat = require('../models/chats.js');
-
-// TODO: Work on error message returned when the user doesn't exist
 
 module.exports = (socket) => {
   socket.on('user:join', async (data) => {
