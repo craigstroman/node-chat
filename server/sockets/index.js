@@ -102,7 +102,6 @@ module.exports = (socket) => {
   });
 
   socket.on('typing', (data) => {
-    console.log('data: ', data);
     socket.broadcast.emit('typingResponse', data);
   });
 };
