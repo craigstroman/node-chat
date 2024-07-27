@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios,  { AxiosResponse } from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import './home.scss';
 
@@ -7,12 +7,10 @@ interface IHome {
   socket: any;
 }
 
-
 export const Home: React.FC<IHome> = ({ socket }) => {
   const navigate = useNavigate();
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [type, setType] = useState<string>('password');
   const [error, setError] = useState<string>('');
   const [usernameError, setUsernameError] = useState<string>('');
   const [passwordError, setPasswordError] = useState<string>('');
@@ -58,18 +56,23 @@ export const Home: React.FC<IHome> = ({ socket }) => {
     e.preventDefault();
 
     if (username.length >= 1 && password.length >= 1) {
-      console.log('inside here: ');
       const headers = {
         'Content-Type': 'application/json',
-      }
-      const result: AxiosResponse|any = await axios.post('/login', {
-        username,
-        password,
-      }, { headers }).catch((err) => { 
-        console.log('error: ', error)
-      });
+      };
+      const result: AxiosResponse | any = await axios
+        .post(
+          '/login',
+          {
+            username,
+            password,
+          },
+          { headers },
+        )
+        .catch((err) => {
+          setError('Invalid username or password.');
+        });
 
-      if (result.status === 200) {
+      if (result && result.status === 200 && error === '') {
         localStorage.setItem('userName', username);
         socket.current.emit('user:join', { user: username, password, socketId: socket.current.id });
         navigate('/chat');
