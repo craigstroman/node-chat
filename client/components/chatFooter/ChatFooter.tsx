@@ -6,7 +6,6 @@ interface IFooter {
   socket: any;
 }
 
-// TODO: Keep on trying to figure out how to send a message when the user stops typing
 export const ChatFooter: React.FC<IFooter> = ({ socket, typingStatus }) => {
   const [message, setMessage] = useState<string>('');
 
