@@ -34,8 +34,6 @@ export const Chat: React.FC<ISocket> = ({ socket }) => {
     socket.current.on('typingResponse', (data) => {
       if (data) {
         setTypingStatus(data);
-      } else {
-        console.log('User is no longer typing');
       }
     });
   }, [socket]);
