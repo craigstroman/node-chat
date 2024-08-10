@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import axios, { AxiosResponse } from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
+import axios, { AxiosResponse } from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import './home.scss';
 
 interface IHome {
@@ -15,6 +17,7 @@ export const Home: React.FC<IHome> = ({ socket }) => {
   const [usernameError, setUsernameError] = useState<string>('');
   const [passwordError, setPasswordError] = useState<string>('');
   const [visible, setVisible] = useState<boolean>(false);
+  const [togglePasswordVisible, setTogglePassword] = useState<boolean>(false);
 
   const handleUsernameChange = (e) => {
     e.preventDefault();
@@ -37,10 +40,12 @@ export const Home: React.FC<IHome> = ({ socket }) => {
       setPassword(value);
       setPasswordError('');
       classList.remove('error');
+      setTogglePassword(true);
     } else {
       setPassword('');
       setPasswordError('Password is required.');
       classList.add('error');
+      setTogglePassword(false);
     }
   };
 
@@ -122,9 +127,16 @@ export const Home: React.FC<IHome> = ({ socket }) => {
             placeholder=""
             onChange={(e) => handlePasswordChange(e)}
           />
-          <p className="toggle-password" onClick={handleShowPassword}>
-            {visible ? 'Hide' : 'Show'}
-          </p>
+          {togglePasswordVisible && (
+            <button
+              type="button"
+              className="toggle-password"
+              onClick={handleShowPassword}
+              title={!visible ? 'Show Password' : 'Hide Password'}
+            >
+              <FontAwesomeIcon icon={!visible ? faEye : faEyeSlash} className="icon" />
+            </button>
+          )}
           <label htmlFor="password" className="floating-label">
             Password:
           </label>

@@ -51,12 +51,16 @@ form {
         }
       }
       .toggle-password {
+        background: none;
+        border: 0;
         position: absolute;
         top: 25%;
         right: 5px;
         font-size: 0.8rem;
         cursor: pointer;
-        color: blue;
+        .icon {
+          cursor: pointer;
+        }
       }
       margin-top: 1.5rem;
       margin-bottom: 1.5rem;
