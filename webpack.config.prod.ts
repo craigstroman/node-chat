@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const Dotenv = require('dotenv-webpack');
 
 const filePath = path.join(__dirname, './public/js/');
 const fileName = 'main.min.js';
@@ -67,10 +68,8 @@ module.exports = {
     ],
   },
   plugins: [
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify('production'),
-      },
+    new Dotenv({
+      path: './.env',
     }),
   ],
 };
