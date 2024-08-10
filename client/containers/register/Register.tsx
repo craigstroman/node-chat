@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import './register.scss';
 
 export const Register: React.FC = () => {
   const navigate = useNavigate();
   const [visiblePassword, setVisiblePassword] = useState<boolean>(false);
   const [visibleConfirmPassword, setVisibleConfirmPassword] = useState<boolean>(false);
+  const [togglePasswordVisible, setTogglePassword] = useState<boolean>(false);
+  const [toggleConfirmPasswordVisible, setToggleConfirmPassword] = useState<boolean>(false);
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -147,6 +151,9 @@ export const Register: React.FC = () => {
         password: 'Password is required.',
       }));
       classList.add('error');
+      setTogglePassword(false);
+    } else if (name === 'password' && value.length) {
+      setTogglePassword(true);
     }
 
     if (name === 'confirmPassword' && !value.length) {
@@ -155,6 +162,9 @@ export const Register: React.FC = () => {
         confirmPassword: 'Confirm password is required.',
       }));
       classList.add('error');
+      setToggleConfirmPassword(false);
+    } else if (name === 'confirmPassword' && value.length) {
+      setToggleConfirmPassword(true);
     }
   };
 
@@ -269,9 +279,16 @@ export const Register: React.FC = () => {
               onChange={(e) => handleInputChange(e)}
               placeholder=""
             />
-            <p className="toggle-password" onClick={handleShowPassword}>
-              {visiblePassword ? 'Hide' : 'Show'}
-            </p>
+            {togglePasswordVisible && (
+              <button
+                type="button"
+                className="toggle-password"
+                onClick={handleShowPassword}
+                title={!visiblePassword ? 'Show Password' : 'Hide Password'}
+              >
+                <FontAwesomeIcon icon={!visiblePassword ? faEye : faEyeSlash} className="icon" />
+              </button>
+            )}
             <label htmlFor="password" className="floating-label">
               Password*
             </label>
@@ -290,9 +307,16 @@ export const Register: React.FC = () => {
             <label htmlFor="confirmPassword" className="floating-label">
               Confirm Password*
             </label>
-            <p className="toggle-password" onClick={handleShowConfirmPassword}>
-              {visibleConfirmPassword ? 'Hide' : 'Show'}
-            </p>
+            {toggleConfirmPasswordVisible && (
+              <button
+                type="button"
+                className="toggle-password"
+                onClick={handleShowPassword}
+                title={!visibleConfirmPassword ? 'Show Password' : 'Hide Password'}
+              >
+                <FontAwesomeIcon icon={!visibleConfirmPassword ? faEye : faEyeSlash} className="icon" />
+              </button>
+            )}
             <div className="input-error">{formError.confirmPassword && formError.confirmPassword}</div>
           </div>
         </div>
